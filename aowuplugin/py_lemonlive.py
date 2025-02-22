@@ -303,7 +303,7 @@ class Spider(Spider):
             for i in self.dyifdata['categoryData']:
                 c = i['partition']
                 if c['id_str'] == ids[0] and c['title'] == ids[1]:
-                    vlist = i['sub_partition']
+                    vlist = i['sub_partition'].copy()
                     vlist.insert(0, {'partition': c})
                     for j in vlist:
                         j = j['partition']
@@ -765,5 +765,5 @@ class Spider(Spider):
 
     def handle_exception(self, e):
         print(f"报错: {str(e)}")
-        return {'vod_play_from': '哎呀翻车啦', 'vod_play_url': f'翻车啦#{self.excepturl}'}
+        return {'vod_play_from': '哎呀翻车啦', 'vod_play_url': f'翻车啦${self.excepturl}'}
 
