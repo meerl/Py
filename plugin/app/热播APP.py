@@ -27,7 +27,7 @@ class Spider(Spider):
     def destroy(self):
         pass
 
-    host='http://v.rbotv.cn'
+    host='http://rbotv.cn'
 
     headers = {
         'User-Agent': 'okhttp-okgo/jeasonlzy',
@@ -39,6 +39,8 @@ class Spider(Spider):
         result = {}
         classes = []
         filters = {}
+        current_year = int(time.strftime('%Y'))
+        new_years = [str(y) for y in range(current_year, 2023, -1)]
         for k in data['data']['list']:
             classes.append({
                 'type_name': k['type_name'],
@@ -47,6 +49,10 @@ class Spider(Spider):
             fts = []
             for i,x in k.items():
                 if isinstance(x, list) and len(x)>2:
+                    if i == 'year' or '2023' in [str(item) for item in x]:
+                        exist_years = [str(item) for item in x]
+                        add_years = [y for y in new_years if y not in exist_years]
+                        x = add_years + x
                     fts.append({
                         'name': i,
                         'key': i,
